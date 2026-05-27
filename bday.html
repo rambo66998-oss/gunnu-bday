@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Gunnu 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #f48fb1;
+    --pink-light: #fce4ec;
+    --pink-deep: #e91e63;
+    --pink-soft: #f8bbd9;
+    --red-brown: #8B2500;
+    --cream: #fff9f0;
+    --heart-bg: #f8a5c2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* SLIDE SYSTEM */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ===================== SLIDE 1: PIN ENTRY ===================== */
+  #slide-pin {
+    background: white;
+    flex-direction: row;
+    gap: 0;
+  }
+  .pin-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pin-left img { width: 340px; max-width: 45vw; }
+  .pin-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .pin-display {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .pin-box {
+    width: 60px; height: 60px;
+    border: 3px solid #111;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-family: 'Fredoka One', cursive;
+    color: var(--pink-deep);
+    transition: all 0.2s;
+  }
+  .pin-box.filled { background: var(--pink-light); }
+  .pin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .heart-btn {
+    width: 72px; height: 72px;
+    background: var(--heart-bg);
+    border: none;
+    cursor: pointer;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    clip-path: url(#heart);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    position: relative;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .heart-btn:hover { transform: scale(1.1); background: var(--pink); }
+  .heart-btn:active { transform: scale(0.95); }
+  /* Heart shape via CSS */
+  .heart-btn::before, .heart-btn::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+  /* Using a simpler heart approach */
+  .heart-shape {
+    width: 72px; height: 65px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .heart-shape::before, .heart-shape::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 36px; height: 58px;
+    background: var(--heart-bg);
+    border-radius: 36px 36px 0 0;
+    transition: background 0.15s;
+  }
+  .heart-shape::before { left: 36px; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .heart-shape::after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+  .heart-shape:hover::before, .heart-shape:hover::after { background: var(--pink); }
+  .heart-shape span {
+    position: relative;
+    z-index: 2;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    margin-top: 18px;
+  }
+  .pin-error {
+    color: var(--pink-deep);
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    height: 24px;
+  }
+
+  /* ===================== SLIDE 2: HAPPY BIRTHDAY SNOOPY ===================== */
+  #slide-hb {
+    background: white;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hb-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    animation: popIn 0.7s ease;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .hb-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(48px, 8vw, 96px);
+    background: linear-gradient(135deg, #ff69b4, #ff1493, #ff69b4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(2px 2px 0 #ffd6e7);
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.1;
+  }
+  .sparkle {
+    position: absolute;
+    font-size: 24px;
+    animation: sparkle 1s ease-in-out infinite alternate;
+  }
+  @keyframes sparkle { 0% { opacity: 0.4; transform: scale(0.8) rotate(-10deg); } 100% { opacity: 1; transform: scale(1.2) rotate(10deg); } }
+  .hb-snoopy { width: 280px; animation: bounce 1.2s ease infinite alternate; }
+  @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-12px); } }
+  .next-btn {
+    background: var(--pink-soft);
+    border: none;
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 15px rgba(244,143,177,0.4);
+    margin-top: 10px;
+  }
+  .next-btn:hover { transform: scale(1.07); background: var(--pink); color: white; }
+
+  /* ===================== SLIDE 3: MAKE A WISH ===================== */
+  #slide-wish {
+    background: white;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .wish-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(36px, 6vw, 72px);
+    color: var(--red-brown);
+    text-align: center;
+  }
+  .cake-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .cake-img { width: min(420px, 80vw); }
+  .blow-btn {
+    position: absolute;
+    bottom: 10px;
+    background: var(--pink-soft);
+    border: none;
+    border-radius: 16px;
+    padding: 12px 30px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .blow-btn:hover { background: var(--pink-deep); color: white; transform: scale(1.05); }
+  .candles-out { display: none; }
+
+  /* ===================== SLIDE 4: NAME REVEAL ===================== */
+  #slide-name {
+    background: white;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .name-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(32px, 6vw, 72px);
+    color: var(--red-brown);
+    text-align: center;
+    animation: fadeSlideUp 0.8s ease;
+  }
+  .name-cake { width: min(500px, 85vw); animation: fadeSlideUp 0.8s ease 0.2s both; }
+  @keyframes fadeSlideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===================== SLIDE 5: CHOOSE ===================== */
+  #slide-choose {
+    background: white;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+  }
+  .choose-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .choose-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(28px, 5vw, 58px);
+    color: var(--red-brown);
+    text-align: center;
+  }
+  .choose-sub {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(22px, 3.5vw, 40px);
+    color: var(--pink-deep);
+    text-align: center;
+  }
+  .choose-items {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .choose-item {
+    cursor: pointer;
+    transition: transform 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .choose-item:hover { transform: scale(1.12) rotate(-2deg); }
+  .choose-item img { width: clamp(100px, 15vw, 160px); }
+  .snoopy-corner { width: 80px; }
+
+  /* ===================== SLIDE 6: CAMERA / PIC ===================== */
+  #slide-camera {
+    background: white;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .cam-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(24px, 4vw, 52px);
+    color: var(--red-brown);
+    text-align: center;
+  }
+  .camera-wrap {
+    position: relative;
+    width: min(340px, 80vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .camera-img { width: 100%; }
+  .polaroid {
+    position: absolute;
+    top: -60px;
+    width: 62%;
+    background: white;
+    padding: 8px 8px 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    transform: rotate(3deg);
+    animation: slideOut 0.5s ease;
+  }
+  .polaroid img { width: 100%; display: block; }
+  @keyframes slideOut {
+    0% { top: 0; opacity: 0; }
+    100% { top: -60px; opacity: 1; }
+  }
+  .cam-caption {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(18px, 3vw, 36px);
+    color: var(--red-brown);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* ===================== SLIDE 7: LOVE NOTE ===================== */
+  #slide-note {
+    background: white;
+    flex-direction: row;
+    gap: 30px;
+    padding: 40px;
+    flex-wrap: wrap;
+  }
+  .note-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .stamp-photo {
+    border: 6px solid var(--red-brown);
+    padding: 0;
+    width: clamp(120px, 18vw, 200px);
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  }
+  .mirror-photo {
+    width: clamp(140px, 20vw, 220px);
+    border-radius: 8px;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  }
+  .note-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-width: 280px;
+  }
+  .clipboard {
+    background: #f5f0e0;
+    border: 2px solid #c5b99a;
+    border-radius: 8px;
+    padding: 30px 24px 24px;
+    position: relative;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+    max-width: 380px;
+    background-image: repeating-linear-gradient(transparent, transparent 27px, #d0c9b0 28px);
+    line-height: 28px;
+  }
+  .clipboard::before {
+    content: '';
+    position: absolute;
+    top: -18px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 36px;
+    background: #c9a84c;
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .clipboard-text {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(13px, 1.8vw, 18px);
+    color: #333;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .flower-accent {
+    font-size: 32px;
+    position: absolute;
+    top: -20px; right: -20px;
+  }
+
+  /* ===================== SLIDE 8: SONG ===================== */
+  #slide-song {
+    background: #1a3a3a;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+  .song-embed {
+    width: min(700px, 90vw);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+  .song-embed iframe { display: block; }
+  .song-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 28px;
+    color: white;
+    opacity: 0.8;
+    letter-spacing: 1px;
+  }
+
+  /* CONFETTI */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 14px;
+    top: -20px;
+    animation: confettiFall linear forwards;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* HEARTS FLOAT */
+  .floating-heart {
+    position: fixed;
+    font-size: 20px;
+    animation: floatUp 2.5s ease forwards;
+    pointer-events: none;
+    z-index: 999;
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-200px) scale(1.5); }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========== SLIDE 1: PIN =========== -->
+<div class="slide active" id="slide-pin">
+  <div class="pin-left">
+    <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png" 
+         onerror="this.src='https://i.imgur.com/6EFLlPN.png'; this.onerror=null;"
+         alt="Snoopy with flowers"
+         style="filter: hue-rotate(300deg) saturate(1.3);">
+  </div>
+  <div class="pin-right">
+    <div class="pin-display" id="pinDisplay">
+      <div class="pin-box" id="b0"></div>
+      <div class="pin-box" id="b1"></div>
+      <div class="pin-box" id="b2"></div>
+      <div class="pin-box" id="b3"></div>
+    </div>
+    <div class="pin-grid" id="pinGrid">
+      <!-- Hearts with numbers 1-9, *, 0, # -->
+    </div>
+    <div class="pin-error" id="pinError"></div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 2: HAPPY BIRTHDAY =========== -->
+<div class="slide" id="slide-hb">
+  <div style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;">
+    <span class="sparkle" style="top:10%; left:10%; color:#ff4e9b; animation-delay:0s;">✦</span>
+    <span class="sparkle" style="top:15%; right:12%; color:#ff69b4; animation-delay:0.3s;">✦</span>
+    <span class="sparkle" style="bottom:20%; left:15%; color:#ff1493; animation-delay:0.6s;">✦</span>
+    <span class="sparkle" style="bottom:25%; right:10%; color:#ff69b4; animation-delay:0.9s;">✦</span>
+    <div class="hb-content">
+      <div class="hb-title">HAPPY<br>BIRTHDAY!</div>
+      <img class="hb-snoopy" 
+           src="https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png"
+           onerror="this.src='https://i.imgur.com/6EFLlPN.png'"
+           alt="Snoopy birthday" style="width:200px;">
+      <button class="next-btn" onclick="goTo('slide-wish'); launchConfetti()">NEXT →</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 3: MAKE A WISH =========== -->
+<div class="slide" id="slide-wish">
+  <div style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%; height:100%; justify-content:center;">
+    <div class="wish-title">Make a wish 🕯️</div>
+    <div class="cake-wrap">
+      <svg width="380" height="320" viewBox="0 0 380 320" style="max-width:85vw;">
+        <!-- Cake base -->
+        <ellipse cx="190" cy="280" rx="130" ry="30" fill="#f06292"/>
+        <rect x="60" y="200" width="260" height="90" rx="20" fill="#f48fb1"/>
+        <ellipse cx="190" cy="200" rx="130" ry="25" fill="#f06292"/>
+        <!-- Drip -->
+        <path d="M70,200 Q90,230 80,240 Q85,245 90,235 Q95,255 85,265" fill="none" stroke="#fce4ec" stroke-width="8" stroke-linecap="round"/>
+        <path d="M120,198 Q140,225 130,238 Q135,243 140,233" fill="none" stroke="#fce4ec" stroke-width="8" stroke-linecap="round"/>
+        <path d="M250,198 Q270,225 262,238" fill="none" stroke="#fce4ec" stroke-width="8" stroke-linecap="round"/>
+        <path d="M295,200 Q310,228 302,240 Q306,244 310,235 Q314,255 305,265" fill="none" stroke="#fce4ec" stroke-width="8" stroke-linecap="round"/>
+        <!-- Tier 2 -->
+        <ellipse cx="190" cy="155" rx="95" ry="20" fill="#f06292"/>
+        <rect x="95" y="110" width="190" height="55" rx="15" fill="#f48fb1"/>
+        <ellipse cx="190" cy="110" rx="95" ry="18" fill="#f8bbd9"/>
+        <!-- Hearts decor -->
+        <text x="140" y="240" font-size="16" fill="white" opacity="0.6">♥</text>
+        <text x="215" y="235" font-size="14" fill="white" opacity="0.5">♥</text>
+        <text x="170" y="150" font-size="12" fill="white" opacity="0.6">♥</text>
+        <!-- Candles -->
+        <g id="candles">
+          <rect x="128" y="72" width="10" height="38" rx="5" fill="#f48fb1"/>
+          <rect x="148" y="65" width="10" height="45" rx="5" fill="#f8bbd9"/>
+          <rect x="168" y="70" width="10" height="40" rx="5" fill="#f48fb1"/>
+          <rect x="188" y="63" width="10" height="47" rx="5" fill="#f8bbd9"/>
+          <rect x="208" y="68" width="10" height="42" rx="5" fill="#f48fb1"/>
+          <rect x="228" y="72" width="10" height="38" rx="5" fill="#f8bbd9"/>
+          <rect x="248" y="67" width="10" height="43" rx="5" fill="#f48fb1"/>
+        </g>
+        <!-- Flames -->
+        <g id="flames">
+          <text x="126" y="68" font-size="16">🔥</text>
+          <text x="146" y="61" font-size="16">🔥</text>
+          <text x="166" y="66" font-size="16">🔥</text>
+          <text x="186" y="59" font-size="16">🔥</text>
+          <text x="206" y="64" font-size="16">🔥</text>
+          <text x="226" y="68" font-size="16">🔥</text>
+          <text x="246" y="63" font-size="16">🔥</text>
+        </g>
+      </svg>
+      <button class="blow-btn" id="blowBtn" onclick="blowCandles()">🌬️ BLOW</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 4: NAME =========== -->
+<div class="slide" id="slide-name">
+  <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px; width:100%; height:100%;">
+    <div class="name-title">Happy Birthday<br><span style="font-size:1.2em; color:var(--pink-deep);">MERI GAJRELI 🎂</span></div>
+    <!-- Pink cake SVG -->
+    <svg class="name-cake" viewBox="0 0 500 320" style="max-width:85vw;">
+      <ellipse cx="250" cy="290" rx="180" ry="35" fill="#f06292"/>
+      <rect x="70" y="200" width="360" height="100" rx="25" fill="#f48fb1"/>
+      <ellipse cx="250" cy="200" rx="180" ry="28" fill="#f8bbd9"/>
+      <path d="M80,200 Q100,240 90,255 Q96,262 102,248" stroke="#fce4ec" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path d="M140,196 Q160,232 152,248" stroke="#fce4ec" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path d="M350,196 Q370,232 362,248" stroke="#fce4ec" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path d="M400,200 Q415,235 408,250 Q413,255 418,244" stroke="#fce4ec" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <ellipse cx="250" cy="155" rx="130" ry="25" fill="#f06292"/>
+      <rect x="120" y="110" width="260" height="55" rx="20" fill="#f48fb1"/>
+      <ellipse cx="250" cy="110" rx="130" ry="22" fill="#fce4ec"/>
+      <text x="185" y="250" font-size="18" fill="white" opacity="0.5">♥ ♥ ♥</text>
+      <!-- Candles (unlit) -->
+      <rect x="175" y="68" width="10" height="42" rx="5" fill="#f48fb1"/>
+      <rect x="198" y="62" width="10" height="48" rx="5" fill="#f8bbd9"/>
+      <rect x="221" y="66" width="10" height="44" rx="5" fill="#f48fb1"/>
+      <rect x="244" y="60" width="10" height="50" rx="5" fill="#f8bbd9"/>
+      <rect x="267" y="65" width="10" height="45" rx="5" fill="#f48fb1"/>
+      <rect x="290" y="68" width="10" height="42" rx="5" fill="#f8bbd9"/>
+      <rect x="313" y="63" width="10" height="47" rx="5" fill="#f48fb1"/>
+    </svg>
+    <button class="next-btn" onclick="goTo('slide-choose')">Next →</button>
+  </div>
+</div>
+
+<!-- =========== SLIDE 5: CHOOSE =========== -->
+<div class="slide" id="slide-choose">
+  <div style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%;">
+    <div style="display:flex; justify-content:space-between; width:100%; padding:0 20px; align-items:flex-start;">
+      <img src="https://i.imgur.com/6EFLlPN.png" class="snoopy-corner" alt="" onerror="this.style.display='none'">
+      <div>
+        <div class="choose-title">These are for you! 🎁</div>
+        <div class="choose-sub">Choose one to open</div>
+      </div>
+      <img src="https://i.imgur.com/6EFLlPN.png" class="snoopy-corner" alt="" onerror="this.style.display='none'">
+    </div>
+    <div class="choose-items">
+      <div class="choose-item" onclick="goTo('slide-camera')" title="Camera">
+        <span style="font-size:clamp(60px,12vw,110px);">📷</span>
+        <span style="font-family:'Caveat',cursive; color:var(--red-brown); font-size:18px;">Camera</span>
+      </div>
+      <div class="choose-item" onclick="goTo('slide-note')" title="Message in a bottle">
+        <span style="font-size:clamp(60px,12vw,110px);">🍶</span>
+        <span style="font-family:'Caveat',cursive; color:var(--red-brown); font-size:18px;">Message</span>
+      </div>
+      <div class="choose-item" onclick="goTo('slide-song')" title="Star / Song">
+        <span style="font-size:clamp(60px,12vw,110px);">⭐</span>
+        <span style="font-family:'Caveat',cursive; color:var(--red-brown); font-size:18px;">Song</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 6: CAMERA / PIC =========== -->
+<div class="slide" id="slide-camera">
+  <div style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%; height:100%; justify-content:center; padding:20px;">
+    <div class="cam-title">be ready for a pic, meri jaan 📸</div>
+    <div style="position:relative; display:flex; align-items:center; justify-content:center; width:min(340px,80vw);">
+      <!-- Polaroid photo -->
+      <div style="position:absolute; top:-80px; background:white; padding:8px 8px 30px; box-shadow:0 6px 20px rgba(0,0,0,0.2); transform:rotate(3deg); z-index:2; width:54%;">
+        <div style="width:100%; aspect-ratio:3/4; background: linear-gradient(135deg, #e0c3fc, #8ec5fc); display:flex; align-items:center; justify-content:center; font-size:40px;">👩</div>
+      </div>
+      <!-- Camera emoji big -->
+      <div style="font-size:clamp(120px,25vw,200px); filter:drop-shadow(4px 4px 12px rgba(0,0,0,0.1));">📷</div>
+    </div>
+    <div class="cam-caption">Meri gunnu puri duniya me sbse zada pyaari hhh 💕</div>
+    <div style="display:flex; gap:14px; margin-top:10px;">
+      <button class="next-btn" onclick="goTo('slide-note')">Next →</button>
+      <button class="next-btn" style="background:#fce4ec;" onclick="goTo('slide-choose')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 7: LOVE NOTE =========== -->
+<div class="slide" id="slide-note">
+  <div style="display:flex; flex-direction:row; gap:30px; align-items:center; justify-content:center; flex-wrap:wrap; padding:30px; width:100%; height:100%;">
+    <div class="note-photos">
+      <div style="border:6px dashed var(--red-brown); padding:3px; border-radius:4px; font-size:4px; letter-spacing:2px; background:white;">
+        <div style="width:clamp(100px,16vw,180px); aspect-ratio:3/4; background:linear-gradient(160deg,#2c2c2c,#555); display:flex;align-items:center;justify-content:center;font-size:32px;">🏙️</div>
+      </div>
+      <div style="background:white; padding:6px 6px 24px; box-shadow:3px 3px 12px rgba(0,0,0,0.15); transform:rotate(-2deg); width:clamp(110px,17vw,190px);">
+        <div style="aspect-ratio:3/4; background:linear-gradient(160deg,#c5a5d0,#8b6aa0); display:flex;align-items:center;justify-content:center;font-size:36px;">🪞</div>
+      </div>
+    </div>
+    <div class="note-right">
+      <span style="font-size:30px;">🌺</span>
+      <div class="clipboard">
+        <div class="clipboard-text">
+          GUNNU, YOU ARE THE<br>
+          BEST THING THAT HAS<br>
+          EVER HAPPENED TO ME.<br>
+          THNKS FOR BEING W ME<br>
+          GUNNU. I WANNA BE<br>
+          FOREVER W U.<br>
+          <span style="font-size:1.3em;">MWAAAHHHH 💋</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <span style="font-size:28px;">🐾</span>
+        <span style="font-size:28px; animation: bounce 1s ease infinite alternate; display:inline-block;">❤️</span>
+        <span style="font-size:28px;">🐾</span>
+      </div>
+      <button class="next-btn" onclick="goTo('slide-song')">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 8: SONG =========== -->
+<div class="slide" id="slide-song">
+  <div style="display:flex; flex-direction:column; align-items:center; gap:28px; width:100%; height:100%; justify-content:center; padding:30px;">
+    <div style="font-family:'Caveat',cursive; font-size:clamp(22px,4vw,48px); color:white; text-align:center; letter-spacing:1px;">
+      🎵 Dekha Hi Nahi — Osho Jain 🎵
+    </div>
+    <div class="song-embed">
+      <iframe width="100%" height="315" 
+        src="https://www.youtube.com/embed/?list=RDGMEMeKM78tpX&listType=radio" 
+        title="Dekha Hi Nahi - Osho Jain"
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+        style="display:block;">
+      </iframe>
+    </div>
+    <div style="font-family:'Caveat',cursive; color:rgba(255,255,255,0.7); font-size:20px; text-align:center;">
+      For meri gajreli 🌸 with all my love
+    </div>
+    <button class="next-btn" style="background:var(--pink);" onclick="goTo('slide-choose'); launchHearts()">← Back to gifts</button>
+  </div>
+</div>
+
+<script>
+  // ─── PIN SYSTEM ───
+  const CORRECT_PIN = '****'; // All asterisks = any 4 digits work as a "secret"
+  // Actually let's make it open with any 4 inputs
+  let pinEntry = [];
+  const buttons = [1,2,3,4,5,6,7,8,9,'*',0,'#'];
+
+  const grid = document.getElementById('pinGrid');
+  buttons.forEach(num => {
+    const heart = document.createElement('div');
+    heart.className = 'heart-shape';
+    heart.innerHTML = `<span>${num}</span>`;
+    heart.addEventListener('click', () => pressKey(String(num)));
+    grid.appendChild(heart);
+  });
+
+  function pressKey(key) {
+    if (pinEntry.length >= 4) return;
+    pinEntry.push(key);
+    const box = document.getElementById('b' + (pinEntry.length - 1));
+    box.textContent = '*';
+    box.classList.add('filled');
+    box.style.color = '#e91e63';
+
+    if (pinEntry.length === 4) {
+      setTimeout(() => {
+        document.getElementById('pinError').textContent = '';
+        goTo('slide-hb');
+        launchConfetti();
+      }, 400);
+    }
+  }
+
+  // ─── SLIDE NAVIGATION ───
+  function goTo(id) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ─── BLOW CANDLES ───
+  function blowCandles() {
+    const flames = document.getElementById('flames');
+    const btn = document.getElementById('blowBtn');
+    if (flames) {
+      flames.style.transition = 'opacity 0.5s';
+      flames.style.opacity = '0';
+      setTimeout(() => { flames.style.display = 'none'; }, 500);
+    }
+    btn.textContent = '✨ Wish made!';
+    btn.style.background = '#c8e6c9';
+    btn.style.color = '#2e7d32';
+    setTimeout(() => {
+      goTo('slide-name');
+      launchHearts();
+    }, 1200);
+  }
+
+  // ─── CONFETTI ───
+  function launchConfetti() {
+    const colors = ['#ff69b4','#ff1493','#ffd700','#ff6b6b','#c084fc','#60a5fa','#34d399'];
+    for (let i = 0; i < 60; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        c.style.animationDelay = '0s';
+        c.style.transform = `rotate(${Math.random()*360}deg)`;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+      }, i * 40);
+    }
+  }
+
+  // ─── FLOATING HEARTS ───
+  function launchHearts() {
+    const emojis = ['❤️','💕','💖','💗','🌸','✨'];
+    for (let i = 0; i < 15; i++) {
+      setTimeout(() => {
+        const h = document.createElement('div');
+        h.className = 'floating-heart';
+        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        h.style.left = (10 + Math.random() * 80) + 'vw';
+        h.style.bottom = '10vh';
+        h.style.animationDelay = '0s';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 3000);
+      }, i * 150);
+    }
+  }
+</script>
+</body>
+</html>
